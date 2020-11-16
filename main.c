@@ -1,4 +1,5 @@
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,10 +9,11 @@
 
 char **array_PATH(char **env, char ***buf)
 {
-	int i, j;
+	int i, j, k, l, len_token, len_buf, len_tot;
 	char *delim = ":=";
 	char *token;
 	char **arr;
+
 
 	for (i = 0; strstr(env[i], "PATH=") == NULL ; i++);
 
@@ -19,25 +21,27 @@ char **array_PATH(char **env, char ***buf)
 
 	token = strtok(env[i], delim);
 	token = strtok(NULL, delim);
+	
+	len_buf = strlen(**buf);
 
-	j = 0;
-	for (;token != NULL; token = strtok(NULL, delim))
+	for (j = 0;token != NULL; token = strtok(NULL, delim))
 	{
-		arr[j] = malloc(sizeof(char) * 100);
-		arr[j] = token;
+		len_token = strlen(token);
+		len_tot =(len_token + len_buf);
+		arr[j] = malloc(sizeof(char) * 1000);
+		for (k = 0; k < len_token; k++)
+			arr[j][k] = token[k];
+		arr[j][k] = '/';
+		k++;
+		l = 0;
+		for (; k <= len_tot ; k++)
+		{
+			arr[j][k] = (**buf)[l];
+			l++;
+		}
+		arr[j][k] = '\0';
 		j++;
 	}
-/************************************************************************************************
-*												*
-*	Need to concatenate each elements of the new 2d array with first elements of the buffer *
-*												*
-*	have :  [0]  /bin/									*
-*		[1]  /usr/bin									*
-*												*
-*	need :  [0]  /bin/ls									*
-*		[1]  /usr/bin/ls								*
-*												*
-*************************************************************************************************/
 	return(arr);
 }
 
@@ -45,22 +49,40 @@ void create_exec_process(char **buf)
 {
 	int id, i;
 	extern char** environ; 
+	char **arr = array_PATH(environ, &buf);
 
-	printf("%s\n", array_PATH(environ, &buf)[0]);
+	for(i = 0; arr[i] != NULL; i++)
+		printf("%s\n", arr[i]);
 
+/********************************************************
+ *	Need to implement the stat command and put 	*
+ *	the 2d Array in a linkedlist for stat.		*
+ *							*
+ *							*
+ ********************************************************
 
 	id = fork();
 	if (id == 0)
 	{
-		if (execve(buf[0], buf, environ) == -1)
+		if (stat(buf[0]) == 0)
 		{
-			perror("Execution Error");
+			if (execve(buf[0], buf, environ) == -1)
+			{
+				perror("Execution Error");
+			}
+		}
+		if (stat(buf[0]) != 0)
+		{
+			if(execve(array_PATH(environ, &buf), buf, environ) == -1)
+			{
+				perror("Execution Error");
+			}
 		}
 	}
 	if (id != 0)
 	{
 		wait(NULL);
-	}
+	}**/
 }
 
 char **parse_line(char *buf)
