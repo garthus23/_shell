@@ -1,118 +1,41 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <string.h>
+#include "hsh.h"
 
-char **array_PATH(char **env, char ***buf)
+
+/**
+ * main - main function of the hsh shell
+ * @argc: number of arguments
+ * @argv: char table of arguments
+ * @envp: externe char environ
+ * Return: 0 when it works
+ **/
+
+int main(int argc, char *argv[], char *envp[])
 {
-	int i, j, k, l, len_token, len_buf, len_tot;
-	char *delim = ":=";
-	char *token;
-	char **arr;
+	char **args;
+	char *line;
+	int status = 1;
+	pid_t id;
 
+	line = malloc(sizeof(char) * 1000);
+	args = malloc(sizeof(char *) * 8);
 
-	for (i = 0; strstr(env[i], "PATH=") == NULL ; i++);
-
-	arr = malloc(sizeof(char *) * 15);
-
-	token = strtok(env[i], delim);
-	token = strtok(NULL, delim);
-	
-	len_buf = strlen(**buf);
-
-	for (j = 0;token != NULL; token = strtok(NULL, delim))
+	while (status)
 	{
-		len_token = strlen(token);
-		len_tot =(len_token + len_buf);
-		arr[j] = malloc(sizeof(char) * 1000);
-		for (k = 0; k < len_token; k++)
-			arr[j][k] = token[k];
-		arr[j][k] = '/';
-		k++;
-		l = 0;
-		for (; k <= len_tot ; k++)
+		display_prompt();
+		hsh_readline(&line);
+		hsh_exit(line);
+		id = fork();
+		if (id == 0)
 		{
-			arr[j][k] = (**buf)[l];
-			l++;
+			splitstr(line, args);
+			builtin(args[0], envp);
+			hsh_exec_cmd(args, envp);
+			free(line);
 		}
-		arr[j][k] = '\0';
-		j++;
-	}
-	return(arr);
-}
-
-void create_exec_process(char **buf)
-{
-	int id, i;
-	extern char** environ; 
-	char **arr = array_PATH(environ, &buf);
-
-	for(i = 0; arr[i] != NULL; i++)
-		printf("%s\n", arr[i]);
-
-/********************************************************
- *	Need to implement the stat command and put 	*
- *	the 2d Array in a linkedlist for stat.		*
- *							*
- *							*
- ********************************************************
-
-	id = fork();
-	if (id == 0)
-	{
-		if (stat(buf[0]) == 0)
+		else
 		{
-			if (execve(buf[0], buf, environ) == -1)
-			{
-				perror("Execution Error");
-			}
-		}
-		if (stat(buf[0]) != 0)
-		{
-			if(execve(array_PATH(environ, &buf), buf, environ) == -1)
-			{
-				perror("Execution Error");
-			}
+			wait(NULL);
 		}
 	}
-	if (id != 0)
-	{
-		wait(NULL);
-	}**/
-}
-
-char **parse_line(char *buf)
-{
-	int i = 0;
-	char **arr;
-	char *delim = " :\n\t";
-	char *token = strtok(buf, delim);
-
-	arr = malloc(1000);
-	for(;token != NULL; token = strtok(NULL, delim))
-	{
-		arr[i] = malloc(1000);
-		arr[i] = token;
-		i++;
-	}
-
-	return (arr);
-}
-
-int main(void)
-{
-	int i;
-	char *buf[1024];
-	size_t size=1024;
-
-	while (true)
-	{
-			write(1, "£ ", 3);
-			getline(buf, &size, stdin);
-			create_exec_process(parse_line(*buf));
-	}
+	return (0);
 }
