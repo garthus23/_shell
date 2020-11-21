@@ -27,5 +27,7 @@ int builtin(char *str, char **environ);
 void hsh_exit(char *str);
 void hsh_env(char **environ);
 void hsh_sigint(int a);
+char *_strtok( char *str, const char *delims, int *index);
+int _strlen_strtok_delim(char *str, const char *delims, int *index);
 
 #endif

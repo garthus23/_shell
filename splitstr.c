@@ -11,6 +11,9 @@ char **splitstr(char *str, char **ary)
 	char *del = " \t\r\n\v\f";
 	int i, j;
 	int size = 8;
+	int index = 0;
+
+//	ary = malloc(sizeof(char *) * 8);
 
 	if (!str)
 		return (NULL);
@@ -18,11 +21,11 @@ char **splitstr(char *str, char **ary)
 	if (!ary)
 		exit(1);
 
-	token = strtok(str, del);
 
 	i = 0;
-	while (token)
+	while (str[index] != '\0')
 	{
+		token = _strtok(str, del, &index);
 		if (i >= size - 1)
 		{
 			size += size;
@@ -36,7 +39,6 @@ char **splitstr(char *str, char **ary)
 			free(ary);
 		}
 		ary[i] = token;
-		token = strtok(NULL, del);
 		i++;
 	}
 	return (ary);
