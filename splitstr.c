@@ -8,7 +8,7 @@
 char **splitstr(char *str, char **ary)
 {
 	char *token;
-	char *del = " \t\r\n\v\f";
+	char *del = " \t";//\r\n\v\f";
 	int i, j;
 	int size = 8;
 	int index = 0;

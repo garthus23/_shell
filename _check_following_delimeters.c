@@ -11,6 +11,7 @@ int _check_following_delimeters(char *str, int *index, char *delims)
 		{
 			if (str[*index] == delims[i])
 			{
+				del = 1;
 				break;
 			}
 			else
