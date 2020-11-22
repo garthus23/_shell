@@ -7,29 +7,26 @@
  * Return: Nothing
  */
 
-int hsh_exec_cmd(char **arguments, char **environ)
+int hsh_exec_cmd(char **arguments, char **arr, struct stat *st)
 {
 
 	int i;
-	struct stat *st;
-	char **paths = array_PATH(environ, arguments);
 
-	st = malloc(sizeof(struct stat));
 
 	if (!arguments[0])
 		kill(getpid(), SIGTERM);
 
 	i = 0;
-	while (paths[i])
+	while (arr[i])
 	{
-		if (stat(paths[i], st) == 0)
+		if (stat(arr[i], st) == 0)
 		{
-			arguments[0] = paths[i];
+			arguments[0] = arr[i];
 			if (execve(arguments[0], arguments, NULL) == -1)
 			{
 				perror(arguments[0]);
 				free_arr(arguments);
-				free_arr(paths);
+				free_arr(arr);
 				free(st);
 				kill(getpid(), SIGTERM);
 			}
@@ -40,7 +37,7 @@ int hsh_exec_cmd(char **arguments, char **environ)
 	{
 		perror(arguments[0]);
 		free_arr(arguments);
-		free_arr(paths);
+		free_arr(arr);
 		free(st);
 		kill(getpid(), SIGTERM);
 	}

@@ -8,7 +8,7 @@
 char **splitstr(char *str, char **ary)
 {
 	char *token;
-	char *del = " \t";//\r\n\v\f";
+	char *del = " \t\r\n\v\f";
 	int i, j;
 	int size = 8;
 	int index = 0;
@@ -23,6 +23,7 @@ char **splitstr(char *str, char **ary)
 	i = 0;
 	while (str[index] != '\0')
 	{
+		_check_following_delimeters(str, &index, del);
 		token = _strtok(str, del, &index);
 		if (i >= size - 1)
 		{

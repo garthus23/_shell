@@ -11,7 +11,10 @@
 
 int main(int argc, char *argv[], char *envp[])
 {
+	int path = 0, k;
+	struct stat *st;
 	char **args;
+	char **arr;
 	char *line;
 	int status = 1;
 	pid_t id;
@@ -19,20 +22,25 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 
-	line = malloc(sizeof(char) * 1000);
+
+	k = len_env_path(envp, &path);
+	arr = malloc(sizeof(char *) * k);
+	st = malloc(sizeof(struct stat));
+//	line = malloc(sizeof(char) * 1000);
 	args = malloc(sizeof(char *) * 8);
 
 	while (status)
 	{
 		display_prompt();
 		hsh_readline(&line);
-		hsh_exit(line);
+		splitstr(line, args);
+		array_PATH(envp, args, arr, &path);
+		hsh_exit(line, arr, args, st);
 		id = fork();
 		if (id == 0)
 		{
-			splitstr(line, args);
 			builtin(args[0], envp);
-			hsh_exec_cmd(args, envp);
+			hsh_exec_cmd(args, arr, st);
 			free(line);
 		}
 		else

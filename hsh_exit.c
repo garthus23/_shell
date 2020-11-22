@@ -6,7 +6,7 @@
  * Return: nothing
  **/
 
-void hsh_exit(char *str)
+void hsh_exit(char *str, char **arr, char **args, struct stat *st)
 {
 	char *result = "exit";
 	int ex = 1;
@@ -23,6 +23,11 @@ void hsh_exit(char *str)
 			}
 		}
 		if (ex == 1)
+		{
+			free_arr(arr);
+			free_arr(args);
+			free(st);
 			exit(0);
+		}
 	}
 }

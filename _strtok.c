@@ -15,7 +15,7 @@ char *_strtok( char *str, const char *delims, int *index)
 		{
 			for (j = 0; delims[j] != '\0'; j++)
 			{
-				if (str[*index] == delims[j] || str[*index + 1] == '\0')
+				if (str[*index] == delims[j] )
 				{
 					(*index)++;
 					return(result);
@@ -24,6 +24,7 @@ char *_strtok( char *str, const char *delims, int *index)
 			result[k] = str[(*index)];
 			k++;
 		}
+		return(result);
 	}
 	exit (1);
 }
