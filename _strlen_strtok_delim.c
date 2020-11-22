@@ -23,3 +23,4 @@ int _strlen_strtok_delim(char *str, const char *delims, int *index)
 	return (k - *index);
 
 }
+

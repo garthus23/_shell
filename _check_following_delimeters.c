@@ -5,7 +5,7 @@ int _check_following_delimeters(char *str, int *index, char *delims)
 	int del;
 	int i;
 
-	for (del = 1; del != 0; (*index)++)
+	for (del = 1; del != 0 ; (*index)++)
 	{
 		for (i = 0; delims[i] != '\0'; i++)
 		{

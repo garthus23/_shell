@@ -13,8 +13,6 @@ char **splitstr(char *str, char **ary)
 	int size = 8;
 	int index = 0;
 
-	//	ary = malloc(sizeof(char *) * 8);
-
 	if (!str)
 		return (NULL);
 
@@ -31,7 +29,7 @@ char **splitstr(char *str, char **ary)
 			size += size;
 			ary = realloc(ary, sizeof(char *) * size);
 		}
-		ary[i] = malloc(sizeof(char) * _strlen(token));
+		ary[i] = malloc(sizeof(char) * _strlen(token) + 1);
 		if (ary[i] == NULL)
 		{
 			for (j = 0; j < i; j++)
@@ -39,8 +37,10 @@ char **splitstr(char *str, char **ary)
 			free(ary);
 		}
 		ary[i] = token;
-		i++;
 		_check_following_delimeters(str, &index, del);
+		if (str[index + 1] == '\0')
+			index++;
+		i++;
 	}
 	return (ary);
 }
