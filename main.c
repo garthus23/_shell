@@ -26,7 +26,6 @@ int main(int argc, char *argv[], char *envp[])
 	k = len_env_path(envp, &path);
 	arr = malloc(sizeof(char *) * k);
 	st = malloc(sizeof(struct stat));
-//	line = malloc(sizeof(char) * 1000);
 	args = malloc(sizeof(char *) * 8);
 
 	while (status)
