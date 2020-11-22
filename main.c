@@ -16,8 +16,10 @@ int main(int argc, char *argv[], char *envp[])
 	int status = 1;
 	pid_t id;
 
-	line = malloc(sizeof(char) * 1000);
+	(void)argc;
+	(void)argv;
 
+	line = malloc(sizeof(char) * 1000);
 	args = malloc(sizeof(char *) * 8);
 
 	while (status)

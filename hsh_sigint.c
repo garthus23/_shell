@@ -6,6 +6,6 @@
  * Return: nothing
  **/
 
-void hsh_sigint(int a)
+void hsh_sigint()
 {
 }

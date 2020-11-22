@@ -13,7 +13,7 @@ char **splitstr(char *str, char **ary)
 	int size = 8;
 	int index = 0;
 
-//	ary = malloc(sizeof(char *) * 8);
+	//	ary = malloc(sizeof(char *) * 8);
 
 	if (!str)
 		return (NULL);
@@ -40,6 +40,7 @@ char **splitstr(char *str, char **ary)
 		}
 		ary[i] = token;
 		i++;
+		_check_following_delimeters(str, &index, del);
 	}
 	return (ary);
 }

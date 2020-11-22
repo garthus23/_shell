@@ -7,7 +7,7 @@
 
 char *hsh_readline(char **line)
 {
-	ssize_t size = 0;
+	size_t size = 0;
 
 	signal(SIGINT, hsh_sigint);
 

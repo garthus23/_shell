@@ -11,7 +11,7 @@ char *_strtok( char *str, const char *delims, int *index)
 	{
 		result = malloc(sizeof(char) * k);
 		k = 0;
-		for (*index; str[*index] != '\0'; (*index)++)
+		for (; str[*index] != '\0'; (*index)++)
 		{
 			for (j = 0; delims[j] != '\0'; j++)
 			{
