@@ -32,12 +32,12 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		display_prompt();
 		hsh_readline(&line);
-		splitstr(line, args);
-		array_PATH(envp, args, arr, &path);
 		hsh_exit(line, arr, args, st);
 		id = fork();
 		if (id == 0)
 		{
+			splitstr(line, args);
+			array_PATH(envp, args, arr, &path);
 			builtin(args[0], envp);
 			hsh_exec_cmd(args, arr, st);
 			free(line);

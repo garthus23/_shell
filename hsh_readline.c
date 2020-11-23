@@ -9,7 +9,6 @@ char *hsh_readline(char **line)
 {
 	size_t size = 0;
 
-	signal(SIGINT, hsh_sigint);
 
 	if (getline(line, &size, stdin) == EOF)
 		exit(0);
