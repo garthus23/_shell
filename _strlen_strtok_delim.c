@@ -1,5 +1,12 @@
 #include "hsh.h"
 
+/**
+ * _strlen_strtok_delim - strlen_strtok
+ * @str: a string
+ * @delims: a delimeter
+ * @index: an index
+ * Return: index
+ **/
 int _strlen_strtok_delim(char *str, const char *delims, int *index)
 {
 	int j, k, ok;

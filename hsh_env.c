@@ -15,9 +15,9 @@ void hsh_env(char **environ)
 	{
 		for (j = 0; environ[i][j] != '\0'; j++)
 		{
-			putchar(environ[i][j]);
+			_putchar(environ[i][j]);
 		}
-		putchar('\n');
+		_putchar('\n');
 	}
 	exit(0);
 }

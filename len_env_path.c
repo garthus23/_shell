@@ -1,5 +1,11 @@
 #include "hsh.h"
 
+/**
+ * len_env_path - len of env path
+ * @env: environnement variable
+ * @path: an index
+ * Return: an int
+ **/
 int len_env_path(char **env, int *path)
 {
 	int k = 0, l;

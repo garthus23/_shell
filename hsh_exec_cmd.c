@@ -3,7 +3,8 @@
 /**
  * hsh_exec_cmd - exec a command
  * @arguments: array of arguments
- * @environ: extern char env
+ * @arr: an array
+ * @st: a struct
  * Return: Nothing
  */
 

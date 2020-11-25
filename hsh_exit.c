@@ -3,6 +3,9 @@
 /**
  * hsh_exit - exit builtin function
  * @str: an input string
+ * @arr: an array
+ * @args: an array
+ * @st: a struct
  * Return: nothing
  **/
 

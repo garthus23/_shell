@@ -2,6 +2,7 @@
 
 /**
  * hsh_readline - readline from stdin
+ * @line: an array
  * Return: nothing
  **/
 

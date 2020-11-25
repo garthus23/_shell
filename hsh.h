@@ -31,5 +31,6 @@ char *_strtok( char *str, const char *delims, int *index);
 int _strlen_strtok_delim(char *str, const char *delims, int *index);
 int _check_following_delimeters(char *str, int *index, char *delims);
 int len_env_path(char **env, int *path);
+int _putchar(char);
 
 #endif

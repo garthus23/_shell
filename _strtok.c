@@ -1,6 +1,13 @@
 #include "hsh.h"
 
-char *_strtok( char *str, const char *delims, int *index)
+/**
+ * _strtok - cut a string
+ * @str: a string
+ * @delims: a delimiters
+ * @index: an index
+ * Return: result
+ **/
+char *_strtok(char *str, const char *delims, int *index)
 {
 	int j, k;
 	char *result;
@@ -15,16 +22,16 @@ char *_strtok( char *str, const char *delims, int *index)
 		{
 			for (j = 0; delims[j] != '\0'; j++)
 			{
-				if (str[*index] == delims[j] )
+				if (str[*index] == delims[j])
 				{
 					(*index)++;
-					return(result);
+					return (result);
 				}
 			}
 			result[k] = str[(*index)];
 			k++;
 		}
-		return(result);
+		return (result);
 	}
-	exit (1);
+	exit(1);
 }

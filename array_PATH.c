@@ -4,6 +4,8 @@
  * array_PATH - concat path env to an array
  * @env: the env vars
  * @buf: the array
+ * @arr: an array
+ * @path: index
  * Return: a new 2D array
  **/
 

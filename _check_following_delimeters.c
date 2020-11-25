@@ -1,5 +1,13 @@
 #include "hsh.h"
 
+/**
+ * _check_following_delimeters - check for multiple delimeters
+ * @str: a string
+ * @index: an index
+ * @delims: delimeters
+ * Return: 0
+ **/
+
 int _check_following_delimeters(char *str, int *index, char *delims)
 {
 	int del;

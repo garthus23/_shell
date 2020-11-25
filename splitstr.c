@@ -2,6 +2,7 @@
 /**
  * splitstr - create an array from a string
  * @str: a string
+ * @ary: an array
  * Return: an array
  **/
 
