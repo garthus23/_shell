@@ -7,16 +7,15 @@
  * @index: an index
  * Return: result
  **/
-char *_strtok(char *str, const char *delims, int *index)
+char *_strtok(char *result, char *str, const char *delims, int *index)
 {
 	int j, k;
-	char *result;
 
 	k = _strlen_strtok_delim(str, delims, index);
 
 	if (k > 0)
 	{
-		result = malloc(sizeof(char) * k);
+//		result = malloc(sizeof(char) * (k + 1));
 		k = 0;
 		for (; str[*index] != '\0'; (*index)++)
 		{
@@ -25,12 +24,14 @@ char *_strtok(char *str, const char *delims, int *index)
 				if (str[*index] == delims[j])
 				{
 					(*index)++;
+					result[k] = '\0';
 					return (result);
 				}
 			}
 			result[k] = str[(*index)];
 			k++;
 		}
+		result[k] = '\0';
 		return (result);
 	}
 	exit(1);

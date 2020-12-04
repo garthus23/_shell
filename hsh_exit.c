@@ -9,7 +9,7 @@
  * Return: nothing
  **/
 
-void hsh_exit(char *str, char **arr, char **args, struct stat *st)
+int hsh_exit(char *str)
 {
 	char *result = "exit";
 	int ex = 1;
@@ -27,10 +27,8 @@ void hsh_exit(char *str, char **arr, char **args, struct stat *st)
 		}
 		if (ex == 1)
 		{
-			free_arr(arr);
-			free_arr(args);
-			free(st);
-			exit(0);
+			return (1);
 		}
 	}
+	return (0);
 }

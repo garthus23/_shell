@@ -6,12 +6,11 @@
  * Return: nothing
  **/
 
-char *hsh_readline(char **line)
+char *hsh_readline(char **line, size_t *size)
 {
-	size_t size = 0;
+//	*line = malloc(sizeof(char) * 100);
 
-
-	if (getline(line, &size, stdin) == EOF)
+	if (getline(line, size, stdin) == EOF)
 		exit(0);
 
 	return (*line);

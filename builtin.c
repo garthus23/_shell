@@ -7,7 +7,7 @@
  * Return: 0 if it works
  **/
 
-int builtin(char *str, char **environ)
+int builtin(char **args, char **environ)
 {
 	type_d cases[] = {
 		{"env", hsh_env},
@@ -21,7 +21,7 @@ int builtin(char *str, char **environ)
 	{
 		for (j = 0; cases[i].type[j] != '\0'; j++)
 		{
-			if (str[j] == cases[i].type[j])
+			if (args[0][j] == cases[i].type[j])
 				same = 1;
 			else
 			{
@@ -31,7 +31,7 @@ int builtin(char *str, char **environ)
 		}
 		if (same)
 		{
-			cases[i].f(environ);
+			cases[i].f(environ, args);
 		}
 		i++;
 	}

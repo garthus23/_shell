@@ -9,7 +9,7 @@
  * Return: a new 2D array
  **/
 
-char **array_PATH(char **env, char **buf, char **arr, int *path)
+int array_PATH(char **env, char **buf, char **arr, int *path)
 {
 	int j, k, l, index, lentot;
 	char *delim = ":=";
@@ -18,14 +18,13 @@ char **array_PATH(char **env, char **buf, char **arr, int *path)
 	if (env[*path] != NULL)
 	{
 		index = 0;
-		token = _strtok(env[*path], delim, &index);
-		token = _strtok(env[*path], delim, &index);
 		j = 0;
+		token = malloc(sizeof(char) * 100);
 		while (env[*path][index] != '\0')
 		{
-			token = _strtok(env[*path], delim, &index);
+			_strtok(token, env[*path], delim, &index);
 			lentot = _strlen(token) + _strlen(*buf) + 2;
-			arr[j] = malloc(sizeof(char) * lentot);
+			arr[j] = malloc(sizeof(char) * (lentot + 2));
 			for (k = 0; k < _strlen(token); k++)
 				arr[j][k] = token[k];
 			arr[j][k] = '/';
@@ -40,6 +39,7 @@ char **array_PATH(char **env, char **buf, char **arr, int *path)
 			j++;
 		}
 		free(token);
+		arr[j] = NULL;
 	}
-	return (arr);
+	return (1);
 }

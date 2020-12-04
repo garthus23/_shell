@@ -9,37 +9,39 @@
  * Return: 0 when it works
  **/
 
-int main(int argc, char *argv[], char *envp[])
+int main(void)
 {
 	int path = 0, k;
-	struct stat *st;
-	char **args;
-	char **arr;
+	size_t size = 0;
+	char **args, **arr, **copyenv;
 	char *line;
+	char *del = " \t\r\n\v\f";
 	int status = 1;
 	pid_t id;
 
-	(void)argc;
-	(void)argv;
+	k = len_env_path(environ, &path);
+	copyenv = malloc(sizeof(char *) * 100);
+	arr = calloc(100, sizeof(char *));
+	args = calloc(100, sizeof(char *));
+	line = malloc(sizeof(char) * 100);
+	size = 100;
 
-
-	k = len_env_path(envp, &path);
-	arr = malloc(sizeof(char *) * k);
-	st = malloc(sizeof(struct stat));
-	args = malloc(sizeof(char *) * 8);
+	setcopyenv(environ, copyenv);
 
 	while (status)
 	{
 		display_prompt();
-		hsh_readline(&line);
-		hsh_exit(line, arr, args, st);
-		id = fork();
+		hsh_readline(&line, &size);
+		if(hsh_exit(line) == 1)
+			break;
+		if (_isempty(line, del) == 0)
+			id = fork();
 		if (id == 0)
 		{
 			splitstr(line, args);
-			array_PATH(envp, args, arr, &path);
-			builtin(args[0], envp);
-			hsh_exec_cmd(args, arr, st);
+			array_PATH(copyenv, args, arr, &path);
+			builtin(args, copyenv);
+			hsh_exec_cmd(line, args, arr, copyenv);
 			free(line);
 		}
 		else
@@ -47,5 +49,6 @@ int main(int argc, char *argv[], char *envp[])
 			wait(NULL);
 		}
 	}
+	free_all(line, args, arr, copyenv);
 	return (0);
 }

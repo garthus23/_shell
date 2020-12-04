@@ -6,9 +6,10 @@
  * Return: None
  **/
 
-void hsh_env(char **environ)
+void hsh_env(char **environ, char **args)
 {
 
+	(void)args;
 	int i, j;
 
 	for (i = 0; environ[i] != NULL; i++)
