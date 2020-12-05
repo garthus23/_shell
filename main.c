@@ -11,7 +11,7 @@
 
 int main(void)
 {
-	int path = 0, k;
+	int path = 0, k, i;
 	size_t size = 0;
 	char **args, **arr, **copyenv;
 	char *line;
@@ -21,9 +21,9 @@ int main(void)
 
 	k = len_env_path(environ, &path);
 	copyenv = malloc(sizeof(char *) * 100);
+	line = malloc(sizeof(char) * 100);
 	arr = calloc(100, sizeof(char *));
 	args = calloc(100, sizeof(char *));
-	line = malloc(sizeof(char) * 100);
 	size = 100;
 
 	setcopyenv(environ, copyenv);
@@ -32,17 +32,15 @@ int main(void)
 	{
 		display_prompt();
 		hsh_readline(&line, &size);
+		splitstr(line, args);
 		if(hsh_exit(line) == 1)
 			break;
-		if (_isempty(line, del) == 0)
+		if (_isempty(line, del) == 0 && builtin(args, copyenv) == 0)
 			id = fork();
 		if (id == 0)
 		{
-			splitstr(line, args);
 			array_PATH(copyenv, args, arr, &path);
-			builtin(args, copyenv);
 			hsh_exec_cmd(line, args, arr, copyenv);
-			free(line);
 		}
 		else
 		{

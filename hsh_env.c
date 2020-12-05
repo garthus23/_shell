@@ -20,5 +20,4 @@ void hsh_env(char **environ, char **args)
 		}
 		_putchar('\n');
 	}
-	exit(0);
 }

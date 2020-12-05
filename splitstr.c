@@ -14,6 +14,8 @@ int splitstr(char *str, char **ary)
 	int size = 8;
 	int index = 0;
 
+		for(j = 0; ary[j] != NULL; j++)
+			free(ary[j]);
 
 	i = 0;
 	while (str[index] != '\0')

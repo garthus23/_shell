@@ -32,6 +32,7 @@ int builtin(char **args, char **environ)
 		if (same)
 		{
 			cases[i].f(environ, args);
+			return (1);
 		}
 		i++;
 	}
